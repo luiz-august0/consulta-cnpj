@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  backend:
+    build: 
+      context: backend
+    ports:
+      - 8080:8080
+    restart: always
+    depends_on: 
+      - db
+    networks:
+      - react-spring
+      - spring-postgres
+  db:
+    image: postgres:alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: "123"
+      POSTGRES_DB: "consulta_cnpj"
+    networks:
+      - react-spring
+      - spring-postgres
+  frontend:
+    build:
+      context: frontend
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend/src:/code/src
+      - /project/node_modules
+    networks:
+      - react-spring
+    depends_on:
+      - backend
+    expose:
+      - 3306
+      - 33060
+networks:
+  react-spring: {}
+  spring-postgres: {}

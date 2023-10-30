@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    hikari:
+      connection-test-query: SELECT 1
+      minimum-idle: 1
+      maximum-pool-size: 10
+      pool-name: platform-database-pool
+      auto-commit: false
+      connection-timeout: 30000
+    url: "jdbc:postgresql://db:5432/consulta_cnpj"
+    username: postgres
+    password: 123
+    type: com.zaxxer.hikari.HikariDataSource
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  sql:
+    init:
+      mode: always
